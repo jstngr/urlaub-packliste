@@ -5,7 +5,7 @@ Kleine geteilte Web-App, mit der eine Familie fürs gemeinsame Ferienhaus organi
 
 ## Link für die Familie
 
-👉 **https://jstngr.github.io/urlaub-packliste/**
+👉 **https://urlaub.clapt.de**
 
 Einfach öffnen, einmal den eigenen Namen wählen — fertig. Das Gerät merkt sich den Namen.
 Jeder kann Einträge hinzufügen, abhaken, bearbeiten und löschen. Änderungen erscheinen
