@@ -1,15 +1,104 @@
-.name-backdrop { position: fixed; inset: 0; display: grid; place-items: center;
-  background: rgba(0,0,0,.4); padding: 16px; z-index: 20; }
-.name-card { background: #fff; border-radius: 20px; padding: 24px; width: 100%;
-  max-width: 340px; }
-.name-card h1 { margin: 0 0 4px; font-size: 1.4rem; }
-.name-card p { margin: 0 0 16px; color: #666; }
-.name-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
-.name-chips button { border: 1px solid #d0d0d0; background: #f6f6f6;
-  border-radius: 999px; padding: 8px 14px; font-size: 1rem; }
-.name-card label { display: block; font-size: .85rem; color: #555; margin-bottom: 4px; }
-.name-card input { width: 100%; padding: 12px; border: 1px solid #d0d0d0;
-  border-radius: 12px; font-size: 1rem; margin-bottom: 16px; }
-.name-card button.primary { width: 100%; min-height: 48px; border: none;
-  border-radius: 12px; background: #2f7d5b; color: #fff; font-size: 1rem; }
-.name-card button.primary:disabled { opacity: .5; }
+.name-backdrop {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(11, 91, 85, 0.42);
+  backdrop-filter: blur(3px);
+  padding: 16px;
+  z-index: 20;
+}
+.name-card {
+  position: relative;
+  background: var(--paper);
+  border-radius: 22px;
+  padding: 26px 24px 24px;
+  width: 100%;
+  max-width: 350px;
+  box-shadow: var(--shadow-lg);
+  /* sun peeking over the corner */
+  overflow: hidden;
+}
+.name-card::before {
+  content: '';
+  position: absolute;
+  top: -46px;
+  right: -46px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, var(--sun), #ff9e2c);
+  opacity: 0.9;
+}
+.name-card h1 {
+  position: relative;
+  margin: 0 0 6px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.55rem;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.name-card p {
+  margin: 0 0 18px;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.45;
+  max-width: 15em;
+}
+.name-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.name-chips button {
+  border: 1.5px solid var(--line-strong);
+  background: var(--sand);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 600;
+  border-radius: var(--r-pill);
+  padding: 9px 16px;
+  font-size: 1rem;
+  min-height: 42px;
+}
+.name-card label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--sea);
+  margin-bottom: 6px;
+}
+.name-card input {
+  width: 100%;
+  padding: 13px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: 12px;
+  font-size: 1rem;
+  background: #fff;
+  color: var(--ink);
+  margin-bottom: 18px;
+}
+.name-card input:focus {
+  border-color: var(--sea);
+  outline: none;
+}
+.name-card button.primary {
+  width: 100%;
+  min-height: 50px;
+  border: none;
+  border-radius: 13px;
+  background: linear-gradient(160deg, var(--coral) 0%, var(--coral-deep) 100%);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  box-shadow: var(--shadow);
+}
+.name-card button.primary:disabled {
+  opacity: 0.45;
+  box-shadow: none;
+}

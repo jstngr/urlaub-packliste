@@ -1,5 +1,69 @@
-* { box-sizing: border-box; }
-html, body, #root { margin: 0; height: 100%; }
-body { font-family: -apple-system, system-ui, 'Segoe UI', Roboto, sans-serif;
-  background: #f2f4f3; color: #1c1c1c; }
-button { cursor: pointer; font-family: inherit; }
+:root {
+  /* Ferienhaus-am-Meer palette */
+  --sand: #f4e9d4;
+  --sand-deep: #ecdcbe;
+  --paper: #fffcf6;
+  --ink: #1c3b39;
+  --ink-soft: #5c726f;
+  --sea: #0f766e;
+  --sea-deep: #0b5b55;
+  --sea-tint: #d9ebe7;
+  --coral: #f2542d;
+  --coral-deep: #d8431f;
+  --sun: #ffb43a;
+  --line: #e7d9be;
+  --line-strong: #cdbf9f;
+
+  --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-body: 'Inter', -apple-system, system-ui, 'Segoe UI', Roboto, sans-serif;
+
+  --r-card: 16px;
+  --r-pill: 999px;
+  --shadow-sm: 0 2px 8px rgba(28, 59, 57, 0.07);
+  --shadow: 0 8px 24px rgba(28, 59, 57, 0.1);
+  --shadow-lg: 0 14px 34px rgba(28, 59, 57, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  background-color: var(--sand);
+  /* warm sunlight settling at the top of the page */
+  background-image: radial-gradient(
+    120% 60% at 50% -10%,
+    rgba(255, 180, 58, 0.22),
+    rgba(255, 180, 58, 0) 60%
+  );
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+:focus-visible {
+  outline: 2.5px solid var(--sea);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

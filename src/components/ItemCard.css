@@ -1,16 +1,140 @@
-.item-card { display: flex; align-items: flex-start; gap: 12px; padding: 14px;
-  background: #fff; border: 1px solid #eee; border-radius: 14px; margin-bottom: 10px; }
-.item-card.done { opacity: .55; }
-.item-card.done .was { text-decoration: line-through; }
-.item-card input[type="checkbox"] { width: 24px; height: 24px; margin-top: 2px; flex: 0 0 auto; }
-.item-main { flex: 1 1 auto; min-width: 0; }
-.item-title { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
-.was { font-weight: 600; font-size: 1.05rem; }
-.menge { color: #777; font-size: .9rem; }
-.wer { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
-.wer-chip { background: #eaf5ef; color: #2f7d5b; border-radius: 999px;
-  padding: 2px 10px; font-size: .8rem; }
-.notiz { color: #666; font-size: .85rem; margin-top: 6px; }
-.item-actions { display: flex; gap: 4px; flex: 0 0 auto; }
-.item-actions button { border: none; background: none; font-size: 1.1rem;
-  min-width: 40px; min-height: 40px; }
+.item-card {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  padding: 14px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  margin-bottom: 10px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+/* a thin sea seam down the binding edge */
+.item-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--sea);
+  opacity: 0.55;
+}
+
+.item-card.done {
+  opacity: 0.78;
+  background: #fbf6ec;
+}
+.item-card.done::before {
+  background: var(--coral);
+}
+.item-card.done .was {
+  text-decoration: line-through;
+  text-decoration-color: var(--coral);
+  color: var(--ink-soft);
+}
+/* the "Gepackt" rubber stamp */
+.item-card.done::after {
+  content: 'Gepackt';
+  position: absolute;
+  bottom: 9px;
+  right: 11px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--coral);
+  border: 2px solid var(--coral);
+  border-radius: 5px;
+  padding: 1px 6px;
+  transform: rotate(-7deg);
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+/* custom sun checkbox */
+.item-card input[type='checkbox'] {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: 0 0 auto;
+  width: 26px;
+  height: 26px;
+  margin: 1px 0 0;
+  border: 2px solid var(--line-strong);
+  border-radius: 8px;
+  background: var(--sand);
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.12s ease;
+}
+.item-card input[type='checkbox']:checked {
+  border-color: var(--sun);
+  background: var(--sun)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fffdf7' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E")
+    center / 16px no-repeat;
+}
+.item-card input[type='checkbox']:active {
+  transform: scale(0.9);
+}
+
+.item-main {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.item-title {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+.was {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.06rem;
+  color: var(--ink);
+}
+.menge {
+  font-weight: 600;
+  color: var(--sea);
+  font-size: 0.86rem;
+}
+.wer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.wer-chip {
+  background: var(--sea-tint);
+  color: var(--sea-deep);
+  font-weight: 600;
+  border-radius: var(--r-pill);
+  padding: 3px 11px;
+  font-size: 0.78rem;
+}
+.notiz {
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  font-style: italic;
+  margin-top: 8px;
+}
+.item-actions {
+  display: flex;
+  gap: 2px;
+  flex: 0 0 auto;
+}
+.item-actions button {
+  border: none;
+  background: none;
+  font-size: 1.05rem;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 10px;
+  opacity: 0.75;
+  transition: opacity 0.15s ease, background 0.15s ease;
+}
+.item-actions button:hover {
+  opacity: 1;
+  background: var(--sand);
+}
