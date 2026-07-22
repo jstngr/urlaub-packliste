@@ -1,0 +1,22 @@
+.sheet-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.4);
+  display: flex; align-items: flex-end; z-index: 20; }
+.sheet { background: #fff; width: 100%; max-height: 90vh; overflow-y: auto;
+  border-radius: 20px 20px 0 0; padding: 20px; }
+.sheet h2 { margin: 0 0 12px; font-size: 1.2rem; }
+.sheet label, .sheet .field-label { display: block; font-size: .82rem; color: #555;
+  margin: 12px 0 4px; }
+.sheet input, .sheet select, .sheet textarea { width: 100%; padding: 12px;
+  border: 1px solid #d0d0d0; border-radius: 12px; font-size: 1rem; box-sizing: border-box; }
+.wer-select { display: flex; flex-wrap: wrap; gap: 8px; }
+.wer-select button { border: 1px solid #d0d0d0; background: #f6f6f6;
+  border-radius: 999px; padding: 8px 14px; font-size: .95rem; }
+.wer-select button.sel { background: #2f7d5b; color: #fff; border-color: #2f7d5b; }
+.new-person { display: flex; gap: 8px; margin-top: 8px; }
+.new-person input { flex: 1; }
+.new-person button { flex: 0 0 auto; width: 48px; border: 1px solid #d0d0d0;
+  border-radius: 12px; background: #f6f6f6; font-size: 1.2rem; }
+.error { color: #c0392b; font-size: .9rem; margin: 10px 0 0; }
+.sheet-actions { display: flex; gap: 10px; margin-top: 20px; }
+.sheet-actions button { flex: 1; min-height: 48px; border-radius: 12px; font-size: 1rem; border: none; }
+.sheet-actions .ghost { background: #eee; }
+.sheet-actions .primary { background: #2f7d5b; color: #fff; }
