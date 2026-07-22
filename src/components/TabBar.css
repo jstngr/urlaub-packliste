@@ -1,0 +1,8 @@
+.tabbar { display: flex; gap: 8px; overflow-x: auto; padding: 10px 12px;
+  position: sticky; top: 0; background: #fff; border-bottom: 1px solid #eee;
+  -webkit-overflow-scrolling: touch; }
+.tabbar::-webkit-scrollbar { display: none; }
+.tab { flex: 0 0 auto; min-height: 40px; padding: 8px 16px; border-radius: 999px;
+  border: 1px solid #d8d8d8; background: #f4f4f4; font-size: .95rem; white-space: nowrap; }
+.tab[aria-current="true"] { background: #2f7d5b; color: #fff; border-color: #2f7d5b; }
+.tab-add { font-size: 1.3rem; line-height: 1; padding: 8px 14px; }
