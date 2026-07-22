@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import type { JSX } from 'react'
 import type { Category, Item } from '../domain/types'
 import { validateItemInput } from '../domain/items'
 import './ItemSheet.css'

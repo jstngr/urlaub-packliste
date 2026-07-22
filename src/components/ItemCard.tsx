@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import type { Item } from '../domain/types'
 import './ItemCard.css'
 

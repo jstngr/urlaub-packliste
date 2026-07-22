@@ -1,4 +1,5 @@
 import type { Category } from '../domain/types'
+import type { JSX } from 'react'
 import './TabBar.css'
 
 export const ALL_TAB = '__alle__'
