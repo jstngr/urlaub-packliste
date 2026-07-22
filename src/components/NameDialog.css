@@ -1,0 +1,15 @@
+.name-backdrop { position: fixed; inset: 0; display: grid; place-items: center;
+  background: rgba(0,0,0,.4); padding: 16px; z-index: 20; }
+.name-card { background: #fff; border-radius: 20px; padding: 24px; width: 100%;
+  max-width: 340px; }
+.name-card h1 { margin: 0 0 4px; font-size: 1.4rem; }
+.name-card p { margin: 0 0 16px; color: #666; }
+.name-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.name-chips button { border: 1px solid #d0d0d0; background: #f6f6f6;
+  border-radius: 999px; padding: 8px 14px; font-size: 1rem; }
+.name-card label { display: block; font-size: .85rem; color: #555; margin-bottom: 4px; }
+.name-card input { width: 100%; padding: 12px; border: 1px solid #d0d0d0;
+  border-radius: 12px; font-size: 1rem; margin-bottom: 16px; }
+.name-card button.primary { width: 100%; min-height: 48px; border: none;
+  border-radius: 12px; background: #2f7d5b; color: #fff; font-size: 1rem; }
+.name-card button.primary:disabled { opacity: .5; }
