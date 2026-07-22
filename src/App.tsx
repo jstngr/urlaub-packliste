@@ -70,7 +70,7 @@ export default function App(): JSX.Element {
 
       <main className="list">
         {loading && <p className="hint">Lädt…</p>}
-        {!loading && groups.length === 0 && <p className="hint">Noch nichts eingetragen. Tippe unten auf „+ Eintrag".</p>}
+        {!loading && visibleItems.length === 0 && <p className="hint">Noch nichts eingetragen. Tippe unten auf „+ Eintrag“.</p>}
         {groups.map((g) => (
           <section key={g.kategorie}>
             {active === ALL_TAB && <h2 className="group-title">{g.kategorie}</h2>}

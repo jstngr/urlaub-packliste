@@ -10,6 +10,16 @@ export type NewItem = Omit<Item, 'id' | 'erstelltAm'>
 
 const col = collection(db, 'items')
 
+/**
+ * Removes keys whose value is `undefined` from an object.
+ * Firestore's `addDoc`/`updateDoc` throw "Unsupported field value: undefined"
+ * when a field is explicitly set to `undefined` (this app uses plain
+ * `getFirestore`, so undefined-stripping is not enabled globally).
+ */
+export function stripUndefined<T extends Record<string, unknown>>(obj: T): T {
+  return Object.fromEntries(Object.entries(obj).filter(([, v]) => v !== undefined)) as T
+}
+
 export function subscribeItems(cb: (items: Item[]) => void): () => void {
   const q = query(col, orderBy('erstelltAm', 'asc'))
   return onSnapshot(q, (snap) => {
@@ -18,11 +28,11 @@ export function subscribeItems(cb: (items: Item[]) => void): () => void {
 }
 
 export function addItem(input: NewItem): Promise<unknown> {
-  return addDoc(col, { ...input, erstelltAm: serverTimestamp() })
+  return addDoc(col, { ...stripUndefined(input), erstelltAm: serverTimestamp() })
 }
 
 export function updateItem(id: string, patch: Partial<Item>): Promise<void> {
-  return updateDoc(doc(db, 'items', id), patch)
+  return updateDoc(doc(db, 'items', id), stripUndefined(patch))
 }
 
 export function deleteItem(id: string): Promise<void> {
