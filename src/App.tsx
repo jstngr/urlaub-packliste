@@ -7,6 +7,7 @@ import { NameDialog } from './components/NameDialog'
 import { TabBar, ALL_TAB } from './components/TabBar'
 import { ItemCard } from './components/ItemCard'
 import { ItemSheet } from './components/ItemSheet'
+import { PromptDialog } from './components/PromptDialog'
 import { groupItemsByCategory } from './domain/items'
 import type { Item } from './domain/types'
 import { addItem, updateItem, deleteItem, toggleErledigt } from './services/itemsService'
@@ -18,6 +19,7 @@ export default function App(): JSX.Element {
   const { items, categories, people, loading } = useAppData()
   const [active, setActive] = useState<string>(ALL_TAB)
   const [sheet, setSheet] = useState<{ mode: 'add' | 'edit'; item?: Item } | null>(null)
+  const [dialog, setDialog] = useState<{ kind: 'addCategory' } | { kind: 'rename' } | null>(null)
 
   const categoryNames = useMemo(() => categories.map((c) => c.name), [categories])
 
@@ -48,10 +50,7 @@ export default function App(): JSX.Element {
     setSheet(null)
   }
 
-  const handleAddCategory = () => {
-    const n = window.prompt('Name der neuen Kategorie?')
-    if (n && n.trim()) void addCategory(n.trim())
-  }
+  const handleAddCategory = () => setDialog({ kind: 'addCategory' })
 
   const defaultKategorie = active === ALL_TAB ? (categoryNames[0] ?? 'Sonstiges') : active
 
@@ -60,7 +59,7 @@ export default function App(): JSX.Element {
       <header className="app-header">
         <div>
           <h1>Urlaub – Wer bringt was</h1>
-          <button className="whoami" onClick={() => setName(window.prompt('Dein Name?', name) || name)}>
+          <button className="whoami" onClick={() => setDialog({ kind: 'rename' })}>
             {name} ✎
           </button>
         </div>
@@ -99,6 +98,34 @@ export default function App(): JSX.Element {
           currentUser={name}
           onSave={handleSave}
           onClose={() => setSheet(null)}
+        />
+      )}
+
+      {dialog?.kind === 'addCategory' && (
+        <PromptDialog
+          title="Neue Kategorie"
+          label="Name der Kategorie"
+          placeholder="z.B. Strand & Baden"
+          submitLabel="Anlegen"
+          onSubmit={(v) => {
+            void addCategory(v)
+            setDialog(null)
+          }}
+          onCancel={() => setDialog(null)}
+        />
+      )}
+
+      {dialog?.kind === 'rename' && (
+        <PromptDialog
+          title="Dein Name"
+          label="So heißt du in der Liste"
+          initialValue={name}
+          submitLabel="Speichern"
+          onSubmit={(v) => {
+            setName(v)
+            setDialog(null)
+          }}
+          onCancel={() => setDialog(null)}
         />
       )}
     </div>

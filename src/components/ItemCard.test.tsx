@@ -26,11 +26,24 @@ describe('ItemCard', () => {
     expect(onToggle).toHaveBeenCalledWith(true)
   })
 
-  it('deletes after confirm', async () => {
+  it('opens a confirm dialog and deletes on confirm', async () => {
     const onDelete = vi.fn()
-    vi.spyOn(window, 'confirm').mockReturnValue(true)
+    render(<ItemCard item={item} onToggle={() => {}} onEdit={() => {}} onDelete={onDelete} />)
+    // no dialog until the trash button is pressed
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    await userEvent.click(screen.getByRole('button', { name: 'Löschen' }))
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
+    expect(onDelete).not.toHaveBeenCalled()
+    await userEvent.click(screen.getByRole('button', { name: 'Ja, löschen' }))
+    expect(onDelete).toHaveBeenCalledTimes(1)
+  })
+
+  it('does not delete when the confirm dialog is cancelled', async () => {
+    const onDelete = vi.fn()
     render(<ItemCard item={item} onToggle={() => {}} onEdit={() => {}} onDelete={onDelete} />)
     await userEvent.click(screen.getByRole('button', { name: 'Löschen' }))
-    expect(onDelete).toHaveBeenCalled()
+    await userEvent.click(screen.getByRole('button', { name: 'Abbrechen' }))
+    expect(onDelete).not.toHaveBeenCalled()
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   })
 })

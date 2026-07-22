@@ -1,0 +1,83 @@
+.dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(11, 91, 85, 0.42);
+  backdrop-filter: blur(3px);
+  padding: 16px;
+  z-index: 30;
+}
+.dialog-card {
+  width: 100%;
+  max-width: 340px;
+  background: var(--paper);
+  border-radius: 20px;
+  padding: 22px 22px 20px;
+  box-shadow: var(--shadow-lg);
+}
+.dialog-title {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.dialog-message {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+.dialog-label {
+  display: block;
+  margin: 6px 0 6px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--sea);
+}
+.dialog-input {
+  width: 100%;
+  padding: 13px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: #fff;
+  box-sizing: border-box;
+}
+.dialog-input:focus {
+  border-color: var(--sea);
+  outline: none;
+}
+.dialog-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+.dialog-actions button {
+  flex: 1;
+  min-height: 48px;
+  border-radius: 13px;
+  border: none;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+}
+.dialog-actions .ghost {
+  background: var(--sand-deep);
+  color: var(--ink);
+}
+.dialog-actions .primary {
+  background: linear-gradient(160deg, var(--coral) 0%, var(--coral-deep) 100%);
+  color: #fff;
+  box-shadow: var(--shadow);
+}
+.dialog-actions .primary:disabled {
+  opacity: 0.45;
+  box-shadow: none;
+}

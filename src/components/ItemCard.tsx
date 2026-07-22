@@ -1,5 +1,7 @@
+import { useState } from 'react'
 import type { JSX } from 'react'
 import type { Item } from '../domain/types'
+import { ConfirmDialog } from './ConfirmDialog'
 import './ItemCard.css'
 
 export function ItemCard(props: {
@@ -9,6 +11,7 @@ export function ItemCard(props: {
   onDelete: () => void
 }): JSX.Element {
   const { item } = props
+  const [confirming, setConfirming] = useState(false)
   return (
     <div className={`item-card${item.erledigt ? ' done' : ''}`}>
       <input
@@ -31,8 +34,20 @@ export function ItemCard(props: {
       </div>
       <div className="item-actions">
         <button aria-label="Bearbeiten" onClick={props.onEdit}>✎</button>
-        <button aria-label="Löschen" onClick={() => { if (window.confirm('Eintrag löschen?')) props.onDelete() }}>🗑</button>
+        <button aria-label="Löschen" onClick={() => setConfirming(true)}>🗑</button>
       </div>
+      {confirming && (
+        <ConfirmDialog
+          title="Eintrag löschen?"
+          message={`„${item.was}“ wird für alle entfernt.`}
+          confirmLabel="Ja, löschen"
+          onConfirm={() => {
+            setConfirming(false)
+            props.onDelete()
+          }}
+          onCancel={() => setConfirming(false)}
+        />
+      )}
     </div>
   )
 }
