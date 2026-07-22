@@ -116,13 +116,12 @@ export default function App(): JSX.Element {
       )}
 
       {dialog?.kind === 'rename' && (
-        <PromptDialog
-          title="Dein Name"
-          label="So heißt du in der Liste"
-          initialValue={name}
-          submitLabel="Speichern"
-          onSubmit={(v) => {
-            setName(v)
+        <NameDialog
+          people={people}
+          currentName={name}
+          onConfirm={(n) => {
+            if (!people.includes(n)) void addPerson(n)
+            setName(n)
             setDialog(null)
           }}
           onCancel={() => setDialog(null)}
