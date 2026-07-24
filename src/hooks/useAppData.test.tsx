@@ -13,7 +13,6 @@ vi.mock('../services/categoriesService', () => ({
     ])
     return () => {}
   },
-  seedDefaultCategoriesIfEmpty: vi.fn().mockResolvedValue(undefined),
 }))
 vi.mock('../services/peopleService', () => ({
   subscribePeople: (cb: (n: string[]) => void) => { cb(['Papa']); return () => {} },
