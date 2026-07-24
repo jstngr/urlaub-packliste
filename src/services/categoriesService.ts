@@ -1,5 +1,5 @@
 import {
-  collection, addDoc, onSnapshot, query, orderBy,
+  collection, addDoc, doc, setDoc, onSnapshot, query, orderBy,
 } from 'firebase/firestore'
 import { db } from '../firebase'
 import type { Category } from '../domain/types'
@@ -24,7 +24,12 @@ export async function addCategory(name: string): Promise<void> {
 
 export async function seedDefaultCategoriesIfEmpty(existing: Category[]): Promise<void> {
   if (existing.length > 0) return
+  // Deterministic doc IDs make seeding idempotent: if two clients seed the
+  // empty list at once (or a partial seed is retried), they write to the same
+  // 7 documents and converge instead of creating duplicates.
   await Promise.all(
-    DEFAULT_CATEGORIES.map((name, i) => addDoc(col, { name, reihenfolge: i })),
+    DEFAULT_CATEGORIES.map((name, i) =>
+      setDoc(doc(col, `default-${i}`), { name, reihenfolge: i }),
+    ),
   )
 }

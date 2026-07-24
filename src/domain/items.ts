@@ -13,7 +13,14 @@ export function groupItemsByCategory(
   const unknown = [
     ...new Set(items.map((i) => i.kategorie).filter((k) => !known.has(k))),
   ]
-  const order = [...categoryOrder, ...unknown]
+  // De-duplicate names so a repeated category (e.g. from a racy seed that
+  // created duplicate category docs) yields one group, not two.
+  const seen = new Set<string>()
+  const order = [...categoryOrder, ...unknown].filter((k) => {
+    if (seen.has(k)) return false
+    seen.add(k)
+    return true
+  })
   return order
     .map((kategorie) => ({
       kategorie,

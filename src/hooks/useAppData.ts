@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import type { Item, Category } from '../domain/types'
 import { subscribeItems } from '../services/itemsService'
 import { subscribeCategories, seedDefaultCategoriesIfEmpty } from '../services/categoriesService'
@@ -24,5 +24,15 @@ export function useAppData(): {
     }
   }, [catLoaded, categories])
 
-  return { items, categories, people, loading: !catLoaded }
+  // Collapse duplicate category docs (same name) to one, keeping first order.
+  const uniqueCategories = useMemo(() => {
+    const seen = new Set<string>()
+    return categories.filter((c) => {
+      if (seen.has(c.name)) return false
+      seen.add(c.name)
+      return true
+    })
+  }, [categories])
+
+  return { items, categories: uniqueCategories, people, loading: !catLoaded }
 }

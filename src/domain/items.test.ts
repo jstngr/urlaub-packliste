@@ -26,6 +26,16 @@ describe('groupItemsByCategory', () => {
     const out = groupItemsByCategory(items, ['Getränke'])
     expect(out.map((g) => g.kategorie)).toEqual(['Getränke', 'Neu'])
   })
+
+  it('does not duplicate a category or its items when categoryOrder repeats a name', () => {
+    // A duplicate category document (from a racy seed) surfaces as a repeated
+    // name here; it must not double the group or its items.
+    const items = [mk('1', 'Getränke'), mk('2', 'Getränke')]
+    const out = groupItemsByCategory(items, ['Getränke', 'Getränke'])
+    expect(out).toHaveLength(1)
+    expect(out[0].kategorie).toBe('Getränke')
+    expect(out[0].items).toHaveLength(2)
+  })
 })
 
 describe('validateItemInput', () => {

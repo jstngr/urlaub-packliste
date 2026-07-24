@@ -5,7 +5,14 @@ vi.mock('../services/itemsService', () => ({
   subscribeItems: (cb: (i: unknown[]) => void) => { cb([{ id: '1', was: 'Nudeln', wer: [], erledigt: false, kategorie: 'Getränke', erstelltAm: 0 }]); return () => {} },
 }))
 vi.mock('../services/categoriesService', () => ({
-  subscribeCategories: (cb: (c: unknown[]) => void) => { cb([{ id: 'c1', name: 'Getränke', reihenfolge: 0 }]); return () => {} },
+  // Two docs with the same name simulate a racy-seed duplicate.
+  subscribeCategories: (cb: (c: unknown[]) => void) => {
+    cb([
+      { id: 'c1', name: 'Getränke', reihenfolge: 0 },
+      { id: 'c2', name: 'Getränke', reihenfolge: 0 },
+    ])
+    return () => {}
+  },
   seedDefaultCategoriesIfEmpty: vi.fn().mockResolvedValue(undefined),
 }))
 vi.mock('../services/peopleService', () => ({
@@ -21,7 +28,13 @@ describe('useAppData', () => {
     const { result } = renderHook(() => useAppData())
     await waitFor(() => expect(result.current.loading).toBe(false))
     expect(result.current.items.map((i) => i.was)).toEqual(['Nudeln'])
-    expect(result.current.categories.map((c) => c.name)).toEqual(['Getränke'])
     expect(result.current.people).toEqual(['Papa'])
+  })
+
+  it('de-duplicates categories by name (racy-seed duplicates collapse to one)', async () => {
+    const { result } = renderHook(() => useAppData())
+    await waitFor(() => expect(result.current.loading).toBe(false))
+    expect(result.current.categories).toHaveLength(1)
+    expect(result.current.categories.map((c) => c.name)).toEqual(['Getränke'])
   })
 })
