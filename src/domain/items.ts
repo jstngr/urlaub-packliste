@@ -5,6 +5,11 @@ export function validateItemInput(input: { was: string }): string | null {
   return null
 }
 
+/** Items the given person is bringing (their name is in `wer`). */
+export function filterItemsByPerson(items: Item[], person: string): Item[] {
+  return items.filter((i) => i.wer.includes(person))
+}
+
 export function groupItemsByCategory(
   items: Item[],
   categoryOrder: string[],

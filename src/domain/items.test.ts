@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { groupItemsByCategory, validateItemInput } from './items'
+import { filterItemsByPerson, groupItemsByCategory, validateItemInput } from './items'
 import type { Item } from './types'
 
 const mk = (id: string, kategorie: string): Item => ({
@@ -35,6 +35,21 @@ describe('groupItemsByCategory', () => {
     expect(out).toHaveLength(1)
     expect(out[0].kategorie).toBe('Getränke')
     expect(out[0].items).toHaveLength(2)
+  })
+})
+
+describe('filterItemsByPerson', () => {
+  const withWer = (id: string, wer: string[]): Item => ({ ...mk(id, 'X'), wer })
+
+  it('keeps only items the person is bringing', () => {
+    const a = withWer('1', ['Papa', 'Mama'])
+    const b = withWer('2', ['Mama'])
+    const c = withWer('3', [])
+    expect(filterItemsByPerson([a, b, c], 'Papa')).toEqual([a])
+  })
+
+  it('returns nothing when the person brings nothing', () => {
+    expect(filterItemsByPerson([withWer('1', ['Mama'])], 'Papa')).toEqual([])
   })
 })
 

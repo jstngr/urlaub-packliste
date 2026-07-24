@@ -78,9 +78,37 @@
   transform: rotate(2deg) scale(0.96);
 }
 
+/* --- Scope filter: everyone's items vs only mine --- */
+.scope-filter {
+  display: flex;
+  gap: 4px;
+  width: fit-content;
+  margin: 8px 12px 0;
+  padding: 4px;
+  background: var(--sand-deep);
+  border-radius: var(--r-pill);
+}
+.scope-filter button {
+  border: none;
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 8px 16px;
+  min-height: 38px;
+  border-radius: var(--r-pill);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.scope-filter button.active {
+  background: var(--sea);
+  color: #fffdf7;
+  box-shadow: var(--shadow-sm);
+}
+
 /* --- List --- */
 .list {
-  padding: 16px 12px 12px;
+  padding: 12px 12px 12px;
 }
 .group-title {
   display: flex;

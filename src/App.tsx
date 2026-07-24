@@ -8,7 +8,7 @@ import { TabBar, ALL_TAB } from './components/TabBar'
 import { ItemCard } from './components/ItemCard'
 import { ItemSheet } from './components/ItemSheet'
 import { PromptDialog } from './components/PromptDialog'
-import { groupItemsByCategory } from './domain/items'
+import { groupItemsByCategory, filterItemsByPerson } from './domain/items'
 import type { Item } from './domain/types'
 import { addItem, updateItem, deleteItem, toggleErledigt } from './services/itemsService'
 import { addCategory } from './services/categoriesService'
@@ -20,6 +20,7 @@ export default function App(): JSX.Element {
   const [active, setActive] = useState<string>(ALL_TAB)
   const [sheet, setSheet] = useState<{ mode: 'add' | 'edit'; item?: Item } | null>(null)
   const [dialog, setDialog] = useState<{ kind: 'addCategory' } | { kind: 'rename' } | null>(null)
+  const [onlyMine, setOnlyMine] = useState(false)
 
   const categoryNames = useMemo(() => categories.map((c) => c.name), [categories])
 
@@ -32,10 +33,12 @@ export default function App(): JSX.Element {
     )
   }
 
-  const visibleItems = active === ALL_TAB ? items : items.filter((i) => i.kategorie === active)
+  const scopedItems = onlyMine ? filterItemsByPerson(items, name) : items
+  const visibleItems =
+    active === ALL_TAB ? scopedItems : scopedItems.filter((i) => i.kategorie === active)
   const groups =
     active === ALL_TAB
-      ? groupItemsByCategory(items, categoryNames)
+      ? groupItemsByCategory(scopedItems, categoryNames)
       : [{ kategorie: active, items: visibleItems }]
 
   const handleSave = (data: {
@@ -67,9 +70,34 @@ export default function App(): JSX.Element {
 
       <TabBar categories={categories} active={active} onSelect={setActive} onAddCategory={handleAddCategory} />
 
+      <div className="scope-filter" role="group" aria-label="Wessen Sachen anzeigen">
+        <button
+          type="button"
+          className={onlyMine ? '' : 'active'}
+          aria-pressed={!onlyMine}
+          onClick={() => setOnlyMine(false)}
+        >
+          Von allen
+        </button>
+        <button
+          type="button"
+          className={onlyMine ? 'active' : ''}
+          aria-pressed={onlyMine}
+          onClick={() => setOnlyMine(true)}
+        >
+          Nur meine
+        </button>
+      </div>
+
       <main className="list">
         {loading && <p className="hint">Lädt…</p>}
-        {!loading && visibleItems.length === 0 && <p className="hint">Noch nichts eingetragen. Tippe unten auf „+ Eintrag“.</p>}
+        {!loading && visibleItems.length === 0 && (
+          <p className="hint">
+            {onlyMine
+              ? 'Du bringst hier noch nichts mit. Tippe unten auf „+ Eintrag“.'
+              : 'Noch nichts eingetragen. Tippe unten auf „+ Eintrag“.'}
+          </p>
+        )}
         {groups.map((g) => (
           <section key={g.kategorie}>
             {active === ALL_TAB && <h2 className="group-title">{g.kategorie}</h2>}
